@@ -6,8 +6,9 @@ class RewardCard extends StatelessWidget {
     const TextStyle labelTextStyle = TextStyle(color: Colors.grey);
 
     return Card(
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
+        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +47,7 @@ class RewardCard extends StatelessWidget {
               ),
             ]),
       ),
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 15.0),
     );
   }
 }
