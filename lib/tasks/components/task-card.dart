@@ -5,6 +5,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const TextStyle labelTextStyle = TextStyle(color: Colors.grey);
     const TextStyle textStyle = TextStyle(fontSize: 16);
+    const SizedBox verticalSpace = SizedBox(height: 10);
 
     return Card(
       child: Padding(
@@ -12,10 +13,19 @@ class TaskCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Fold laundry',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+              Text(
+                'Fold laundry',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              FlatButton(
+                child: Text("DONE"),
+                onPressed: () {},
+                textColor: Colors.green,
+              ),
+            ]),
             Divider(),
             Text(
               'estimated time',
@@ -25,9 +35,7 @@ class TaskCard extends StatelessWidget {
               '30minutes',
               style: textStyle,
             ),
-            SizedBox(
-              height: 10,
-            ),
+            verticalSpace,
             Text(
               'description',
               style: labelTextStyle,
@@ -36,15 +44,13 @@ class TaskCard extends StatelessWidget {
               'Take the laundry out of the drying machine, fold it and put it in its rightful place in the closet, the drawer or underneath the bed.',
               style: textStyle,
             ),
-            SizedBox(
-              height: 10,
-            ),
+            verticalSpace,
             Text(
-              'points',
+              'reward',
               style: labelTextStyle,
             ),
             Text(
-              '75',
+              '75 Pts.',
               style: textStyle,
             ),
           ],
