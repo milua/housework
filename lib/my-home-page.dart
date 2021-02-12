@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:housework/settings/settings-page.dart';
+import 'package:housework/tasks/tasks-page.dart';
+import 'package:housework/rewards/reward-page.dart';
+import 'package:housework/accounts/account-page.dart';
 
-/// This is the stateful widget that the main application instantiates.
-class BottomNavigationWidget extends StatefulWidget {
-  BottomNavigationWidget({Key key}) : super(key: key);
+import 'rewards/reward-page.dart';
 
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
   @override
-  _BottomNavigationWidgetState createState() => _BottomNavigationWidgetState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+//
+      ),
+      home: MyHomePage(title: 'Housework'),
+    );
+  }
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
-class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  static List<Widget> _myPages = <Widget>[AccountPage(), TasksPage(), RewardPage(), SettingsPage()];
+
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black54);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'My Account',
-      style: optionStyle,
-    ),
-    Text(
-      'Task List',
-      style: optionStyle,
-    ),
-    Text(
-      'Reward List',
-      style: optionStyle,
-    ),
-    Text(
-      'Settings',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -41,10 +45,9 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: _myPages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
