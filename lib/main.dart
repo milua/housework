@@ -79,8 +79,9 @@ class _NavigationWidgetState extends State<NavigationWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[500],
+        selectedItemColor: Colors.green[500],
         unselectedItemColor: Colors.black54,
+        showUnselectedLabels: true,
         onTap: _onItemTapped,
       ),
     );
