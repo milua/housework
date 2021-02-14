@@ -26,7 +26,7 @@ class Task {
   }
 
   void moveTaskToDone(String reviewer) {
-    this.status = TaskStatus.DONE;
+    this.status = TaskStatus.APPROVED;
     this.reviewer = reviewer;
     this.reviewedDate = DateTime.now();
   }

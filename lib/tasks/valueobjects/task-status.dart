@@ -1,3 +1,3 @@
 enum TaskStatus {
-  OPEN, REVIEW, DONE
+  OPEN, REVIEW, APPROVED
 }
