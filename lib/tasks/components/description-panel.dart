@@ -25,7 +25,6 @@ PanelAttributes generateWidget(String header, String content) {
   );
 }
 
-/// This is the stateful widget that the main application instantiates.
 class DescriptionPanel extends StatefulWidget {
   final Task task;
 
@@ -35,13 +34,12 @@ class DescriptionPanel extends StatefulWidget {
   _DescriptionPanelState createState() => _DescriptionPanelState(this.task);
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
 class _DescriptionPanelState extends State<DescriptionPanel> {
   Task task;
   PanelAttributes _data;
 
   _DescriptionPanelState(this.task){
-    this._data = generateWidget(task.title, 'description');
+    this._data = generateWidget(task.title, task.description);
   }
 
   @override

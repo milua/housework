@@ -1,3 +1,0 @@
-enum RewardStatus {
-  OPEN, PENDING
-}
