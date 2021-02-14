@@ -1,3 +1,3 @@
 enum RewardStatus {
-  OPEN, CLAIMED, PLANNED, DONE
+  OPEN, PENDING
 }
