@@ -1,11 +1,9 @@
-import 'package:housework/rewards/entities/reward.dart';
 import 'package:housework/tasks/entities/task.dart';
 
-class DummyDataService {
+class DummyTasksService {
   List<Task> tasks;
-  List<Reward> rewards;
 
-  DummyDataService() {
+  DummyTasksService() {
     tasks = new List<Task>();
     initializeTaskList();
   }

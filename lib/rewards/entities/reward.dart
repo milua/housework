@@ -11,7 +11,7 @@ class Reward {
   DateTime doneDate;
   DateTime plannedDate;
 
-  Reward(int id, String author, String title, int points) {
+  Reward(int id, String title, int points, String author) {
     this.id = id;
     this.author = author;
     this.title = title;
