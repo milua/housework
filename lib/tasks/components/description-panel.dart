@@ -3,6 +3,7 @@
 // Here is a simple example of how to implement ExpansionPanelList.
 
 import 'package:flutter/material.dart';
+import 'package:housework/tasks/entities/task.dart';
 
 // stores ExpansionPanel state information
 class PanelAttributes {
@@ -26,19 +27,26 @@ PanelAttributes generateWidget(String header, String content) {
 
 /// This is the stateful widget that the main application instantiates.
 class DescriptionPanel extends StatefulWidget {
-  DescriptionPanel({Key key}) : super(key: key);
+  final Task task;
+
+  DescriptionPanel({Key key, @required this.task}): super(key: key);
 
   @override
-  _DescriptionPanelState createState() => _DescriptionPanelState();
+  _DescriptionPanelState createState() => _DescriptionPanelState(this.task);
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _DescriptionPanelState extends State<DescriptionPanel> {
-  PanelAttributes _data = generateWidget('description', 'some content');
+  Task task;
+  PanelAttributes _data;
+
+  _DescriptionPanelState(this.task){
+    this._data = generateWidget(task.title, 'description');
+  }
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle subtitleTExtStyle = TextStyle(color: Colors.grey);
+    const TextStyle subtitleTextStyle = TextStyle(color: Colors.grey);
 
     return ExpansionPanelList(
         elevation: 1,
@@ -56,13 +64,13 @@ class _DescriptionPanelState extends State<DescriptionPanel> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        'Washing dishes',
+                        this.task.title,
                         style: TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'points: 30',
-                        style: subtitleTExtStyle,
+                        this.task.points.toString() + ' pts.',
+                        style: subtitleTextStyle,
                       ),
                     ]),
               );
@@ -82,12 +90,12 @@ class _DescriptionPanelState extends State<DescriptionPanel> {
                             children: <Widget>[
                               Text(
                                 'estimated time: 1 hour',
-                                style: subtitleTExtStyle,
+                                style: subtitleTextStyle,
                               ),
                               SizedBox(height: 10),
                               Text(
                                 'description: ' + _data.expandedValue,
-                                style: subtitleTExtStyle,
+                                style: subtitleTextStyle,
                               ),
                             ]),
                         Column(
