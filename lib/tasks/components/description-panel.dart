@@ -39,7 +39,7 @@ class _DescriptionPanelState extends State<DescriptionPanel> {
   PanelAttributes _data;
 
   _DescriptionPanelState(this.task){
-    this._data = generateWidget(task.title, task.description);
+    this._data = generateWidget(task.title, task.title);
   }
 
   @override
@@ -67,7 +67,7 @@ class _DescriptionPanelState extends State<DescriptionPanel> {
                             fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        this.task.points.toString() + ' pts.',
+                        this.task.points.value.toString() + ' pts.',
                         style: subtitleTextStyle,
                       ),
                     ]),

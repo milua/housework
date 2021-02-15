@@ -13,9 +13,9 @@ class DummyRewardService {
   }
 
   void initializeRewardList() {
-    rewards.add(new Reward(1, '1 hour table soccer training', 75, 'Isi'));
-    rewards.add(new Reward(2, 'wash dishes coupon (1 day)', 50, 'Seb'));
-    rewards.add(new Reward(3, 'foot massage', 1025, 'Seb'));
-    rewards.add(new Reward(4, 'piano lesson (45 min)', 5, 'Isi'));
+    rewards.add(new Reward(1, '1 hour table soccer training', 75));
+    rewards.add(new Reward(2, 'wash dishes coupon (1 day)', 50));
+    rewards.add(new Reward(3, 'foot massage', 1025));
+    rewards.add(new Reward(4, 'piano lesson (45 min)', 5));
   }
 }
