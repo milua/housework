@@ -42,7 +42,7 @@ class _TaskPageState extends State<TasksPage> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddTaskDialog()));
+                      MaterialPageRoute(builder: (context) => AddTaskPage()));
                 },
                 child: Icon(Icons.add),
                 backgroundColor: Colors.green,
