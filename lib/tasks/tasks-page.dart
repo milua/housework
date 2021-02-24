@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:housework/tasks/components/add-task-dialog.dart';
 import 'package:housework/tasks/entities/task.dart';
 import 'components/task-card.dart';
 import 'dart:convert';
@@ -26,21 +25,35 @@ class _TaskPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Task>>(
-      future: futureTasks,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              for (var task in snapshot.data) TaskCard(task),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-        return CircularProgressIndicator();
-      },
-    );
+        future: futureTasks,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              body: Column(
+                children: [
+                  ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      for (var task in snapshot.data) TaskCard(task),
+                    ],
+                  ),
+                ],
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddTaskDialog()));
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.green,
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
 
   Future<List<Task>> fetchTasks() async {
@@ -48,7 +61,6 @@ class _TaskPageState extends State<TasksPage> {
 
     if (response.statusCode == 200) {
       Iterable taskList = json.decode(response.body);
-      log('fetch tasks $taskList');
       return taskList.map((task) => Task.fromJson(task)).toList();
     } else {
       throw Exception('Failed to load tasks');

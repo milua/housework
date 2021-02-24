@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housework/settings/settings-page.dart';
 import 'package:housework/tasks/tasks-page.dart';
 import 'package:housework/rewards/reward-page.dart';
 import 'package:housework/accounts/account-page.dart';
@@ -32,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  static List<Widget> _myPages = <Widget>[AccountPage(), TasksPage(), RewardPage(), SettingsPage()];
+  static List<Widget> _myPages = <Widget>[AccountPage(), TasksPage(), RewardPage()];
 
   int _selectedIndex = 1;
 
@@ -60,10 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.redeem_outlined),
             label: 'Rewards',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'Settings',
           ),
         ],
         currentIndex: _selectedIndex,
