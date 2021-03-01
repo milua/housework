@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housework/tasks/components/add-task-dialog.dart';
 import 'package:housework/tasks/entities/task.dart';
-import 'components/task-card.dart';
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
+import 'package:stomp_dart_client/stomp_frame.dart';
+
+import 'components/task-card.dart';
 
 class TasksPage extends StatefulWidget {
   TasksPage({Key key}) : super(key: key);
@@ -14,46 +20,36 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TasksPage> {
-  Future<List<Task>> futureTasks;
+  List<Task> websocketTasks;
 
   @override
   void initState() {
     super.initState();
-    futureTasks = fetchTasks();
+    websocketTasks = [];
+    connectToWebsocket();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Task>>(
-        future: futureTasks,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Scaffold(
-              body: Column(
-                children: [
-                  ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      for (var task in snapshot.data) TaskCard(task),
-                    ],
-                  ),
-                ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddTaskPage()));
-                },
-                child: Icon(Icons.add),
-                backgroundColor: Colors.green,
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+    return Scaffold(
+        body: Column(
+          children: [
+            ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                for (var task in websocketTasks) TaskCard(task),
+              ],
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddTaskPage()));
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+        ));
   }
 
   Future<List<Task>> fetchTasks() async {
@@ -65,5 +61,26 @@ class _TaskPageState extends State<TasksPage> {
     } else {
       throw Exception('Failed to load tasks');
     }
+  }
+
+  void connectToWebsocket() async {
+    StompClient stompClient = StompClient(
+        config: StompConfig(
+            url: 'ws://192.168.178.44:8080/ws-endpoint',
+            onConnect: onConnectCallback,
+            onWebSocketError: (dynamic error) => log(error.toString())));
+
+    stompClient.activate();
+  }
+
+  onConnectCallback(StompClient client, StompFrame frame) {
+    client.subscribe(
+        destination: '/app/task',
+        callback: (StompFrame frame) {
+          List<dynamic> result = json.decode(frame.body);
+          setState(() {
+            websocketTasks = result.map((task) => Task.fromJson(task)).toList();
+          });
+        });
   }
 }
