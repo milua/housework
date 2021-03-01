@@ -32,16 +32,15 @@ class _TaskPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          children: [
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                for (var task in websocketTasks) TaskCard(task),
-              ],
-            ),
-          ],
-        ),
+        body: websocketTasks.length > 0
+            ? ListView.builder(
+                      itemCount: websocketTasks.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: TaskCard(websocketTasks[index]),
+                        );
+                      })
+            : Center(child: const Text('No tasks')),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
